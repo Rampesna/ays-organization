@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <title>Ayssoft | Teams</title>
+    <meta name="description" content="Ayssoft">
+    <meta name="author" content="Ayssoft">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/animate-css/vivify.min.css">
+
+    <link rel="stylesheet" href="assets/css/site.min.css">
+
+    <style>
+        #dragBar {
+            -webkit-user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        #dragBar a {
+            -webkit-app-region: no-drag;
+        }
+
+    </style>
+</head>
+
+<body class="theme-blush font-montserrat">
+
+
+
+<div class="overlay"></div>
+
+<div id="wrapper">
+
+    <nav class="navbar top-navbar" id="dragBar">
+        <div class="container-fluid">
+            <div class="navbar-left">
+                <div class="navbar-btn">
+                    <a href="#"><img src="assets/images/icon.svg" alt="Oculux Logo" class="img-fluid logo"></a>
+                    <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+                </div>
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+            <div class="navbar-right">
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" class="icon-menu" id="shutdownButton"><i class="icon-close"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+    </nav>
+
+    <div id="left-sidebar" class="sidebar">
+        <div class="navbar-brand">
+            <img src="assets/images/ayssoft.png" style="width: 30%; height: 26px">
+            <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu fa fa-chevron-circle-left"></i></button>
+        </div>
+        <div class="sidebar-scroll">
+            <div class="user-account">
+                <div class="user_div">
+                    <img src="assets/images/user.png" class="user-photo" alt="User Profile Picture">
+                </div>
+                <div class="dropdown">
+                    <span>Hoşgeldiniz,</span>
+                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>Talha Can</strong></a>
+                    <ul class="dropdown-menu dropdown-menu-right account vivify flipInY">
+                        <li><a href="{{route('pages.profile')}}"><i class="icon-user"></i>Profili Düzenle</a></li>
+                        <li><a href="javascript:void(0);"><i class="icon-settings"></i>Ayarlar</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{route('authentication.login')}}"><i class="icon-power"></i>Çıkış Yap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    <li class="header">Sohbet Kanalları</li>
+                    <li class=""><a href="#" style="font-size:13px; margin-left: 15px"><span>#Genel</span></a></li>
+                    <li class=""><a href="#" style="font-size:13px; margin-left: 15px"><span>#I-Uyum</span></a></li>
+                    <li class=""><a href="#" style="font-size:13px; margin-left: 15px"><span>#e-Fatura e-Arşiv</span></a></li>
+                    <li class="header" style="margin-bottom: 20px">Direkt Mesaj</li>
+                    <li class=""><a href="#" style="font-size:13px; margin-left: 5px; margin-top: -15px"><i class="fa fa-circle text-success"></i><span>Enes Karakuş</span></a></li>
+                    <li class=""><a href="#" style="font-size:13px; margin-left: 5px; margin-top: -15px"><i class="fa fa-circle-o text-warning"></i><span>Furkan Haskoloğlu</span></a></li>
+                    <li class=""><a href="#" style="font-size:13px; margin-left: 5px; margin-top: -15px"><i class="fa fa-circle text-danger"></i><span>Uğur Gök</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div id="main-content">
+
+    </div>
+</div>
+
+<script>window.$ = window.jQuery = require('jquery');</script>
+<!--<script>window.$ = window.jQuery = require('./jquery-3.0.0.min.js');</script>-->
+
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script>
+<script src="assets/bundles/mainscripts.bundle.js"></script>
+
+<script>
+
+    const electron = require('electron');
+    const { ipcRenderer, remote } = electron;
+
+    let shutdownButton = $("#shutdownButton");
+    shutdownButton.click(function () {
+        ipcRenderer.send('customShutdownRenderer');
+    });
+
+    function maximizeme(){
+        window.moveTo(0, 0);
+        window.resizeTo(screen.width, screen.height)
+    }
+</script>
+
+<script>
+
+</script>
+
+
+</body>
+</html>
