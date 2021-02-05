@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Rampesna/ays-organization#readme",
   "dependencies": {
     "electron": "^11.2.2"
+  },
+  "devDependencies": {
+    "electron-reloader": "^1.2.0"
   }
 }
