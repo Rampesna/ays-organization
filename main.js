@@ -2,33 +2,34 @@ const electron = require("electron");
 const url = require("url");
 const path = require("path");
 
-const mainMenuTemplate = [
-    {
-        label: 'Geliştirici Penceresi',
-        click(item, focusedWindow) {
-            focusedWindow.toggleDevTools();
-        }
-    }
-];
-
 const {
     app,
     BrowserWindow,
-    Menu
+    Menu,
+    nativeTheme,
+    ipcMain
 } = electron;
+
+const mainMenuTemplate = [];
 
 let mainWindow;
 
 app.on('ready', () => {
+    nativeTheme.themeSource = 'dark';
+
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+    Menu.setApplicationMenu(mainMenu);
 
     mainWindow = new BrowserWindow({
-        webPreferences: {
-            nodeIntegration: true
-        },
+        width: 1900,
+        height: 768,
+        titleBarStyle: "hidden",
         frame: false,
-        width: 1366,
-        height: 768
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
     });
 
     mainWindow.loadURL(
@@ -39,17 +40,10 @@ app.on('ready', () => {
         })
     );
 
-    const {ipcMain, dialog} = require('electron')
-
-    ipcMain.on("customShutdownRenderer", () => {
-        app.quit();
-    })
-
-    Menu.setApplicationMenu(mainMenu);
-
 });
-
 
 try {
     require('electron-reloader')(module)
-} catch (_) {}
+} catch (error) {
+    console.log(error);
+}
