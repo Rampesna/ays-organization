@@ -18,9 +18,13 @@
   },
   "homepage": "https://github.com/Rampesna/ays-organization#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "custom-electron-titlebar": "^3.2.6",
     "electron": "^11.2.2",
-    "jquery": "^3.5.1"
+    "electron-toaster": "^2.0.4",
+    "jquery": "^3.5.1",
+    "jwt-decode": "^3.1.2",
+    "keytar": "^7.3.0"
   },
   "devDependencies": {
     "electron-builder": "^22.9.1",

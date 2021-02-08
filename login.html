@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <title></title>
+    <meta name="description" content="Ayssoft">
+    <meta name="author" content="Ayssoft">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/animate-css/vivify.min.css">
+
+    <link rel="stylesheet" href="assets/css/site.min.css">
+
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        #dragBar {
+            -webkit-user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        #dragBar a {
+            -webkit-app-region: no-drag;
+        }
+
+    </style>
+</head>
+
+<body class="theme-blush font-montserrat">
+
+<div class="auth-main particles_js" id="loginForm">
+    <div class="auth_div vivify popIn">
+        <div class="auth_brand">
+            <a class="navbar-brand" href="javascript:void(0);">
+                <img src="assets/images/ayssoft.png" style="width: 150px; height: auto" class="d-inline-block align-top mr-2" alt="">
+            </a>
+        </div>
+        <div class="card">
+            <div class="body">
+                <p class="lead">Hesabınıza Giriş Yapın</p>
+                <div class="form-auth-small m-t-20">
+                    <div class="form-group">
+                        <label for="email" class="control-label sr-only">E-posta Adresiniz</label>
+                        <input type="email" class="form-control round" id="email" placeholder="eposta@adresiniz.com">
+                        <small class="text-danger float-left ml-2 mt-1" id="email_error">*E-posta Adresi Boş Olamaz</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label sr-only">Şifreniz</label>
+                        <input type="password" class="form-control round" id="password" placeholder="Şifreniz">
+                        <small class="text-danger float-left ml-2 mt-1" id="password_error">*Şifrenizi Girin</small>
+                    </div>
+                    <br>
+                    <div class="form-group clearfix">
+                        <label class="fancy-checkbox element-left">
+                            <input type="checkbox">
+                            <span>Beni Hatırla</span>
+                        </label>
+                    </div>
+                    <button type="button" id="sign_in" class="btn btn-primary btn-block">Giriş Yap</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="particles-js"></div>
+</div>
+
+<script>window.$ = window.jQuery = require('jquery');</script>
+
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script>
+<script src="assets/bundles/mainscripts.bundle.js"></script>
+<script src="assets/vendor/toastr/toastr.js"></script>
+
+<script>
+    $("#email_error").hide();
+    $("#password_error").hide();
+    $("#loginForm").hide();
+
+    $("#sign_in").on('click', function () {
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        if (email == null || email === '') {
+            $("#email_error").fadeIn(250);
+        } else {
+            $("#email_error").fadeOut(250);
+            if (password == null || password === '') {
+                $("#password_error").fadeIn(250);
+            } else {
+                $("#password_error").fadeOut(250);
+
+                const { ipcRenderer } = require('electron');
+
+                ipcRenderer.send('login', {
+                    email: email,
+                    password: password
+                });
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        $("#loginForm").fadeIn(200);
+    });
+</script>
+
+</body>
+</html>
