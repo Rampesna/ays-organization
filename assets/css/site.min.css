@@ -9532,10 +9532,8 @@ hr {
 }
 
 .chatapp_body {
-    margin-right: 250px;
+    margin-right: 0;
     margin-left: 250px;
-    border-left: 1px solid #2f3338;
-    border-right: 1px solid #2f3338
 }
 
 @media screen and (max-width: 992px) {
@@ -9575,7 +9573,6 @@ hr {
 
 .chatapp_body .chat-history {
     padding: 20px;
-    border-top: 1px solid #2f3338
 }
 
 @media screen and (max-width: 1024px) {
@@ -9601,16 +9598,18 @@ hr {
 
 .chatapp_body .chat-history .message_data li {
     list-style: none;
-    position: relative
+    position: relative;
+    bottom: 0;
 }
 
 .chatapp_body .chat-history .message_data li .data_time {
     color: #77797c;
     position: absolute;
-    bottom: -25px
+    bottom: -40px
 }
 
 .chatapp_body .chat-history .message_data li .message {
+    margin-top: -30px;
     display: inline-block;
     vertical-align: middle;
     *vertical-align: auto;
@@ -9642,10 +9641,10 @@ hr {
     -moz-border-radius: 4px;
     border-radius: 4px;
     position: absolute;
-    bottom: 0;
-    width: 35px;
-    height: 35px;
-    opacity: 0.6
+    bottom: 25%;
+    width: 25px;
+    height: 25px;
+    opacity: 1
 }
 
 .chatapp_body .chat-history .message_data li .user_pix:hover {
@@ -9657,21 +9656,17 @@ hr {
 }
 
 .chatapp_body .chat-history .message_data li.left .data_time {
-    left: 50px
+    left: 0;
+    bottom: -20px;
 }
 
 .chatapp_body .chat-history .message_data li.left .message {
-    background: #3C89DA;
+    background: transparent;
     color: #f7f7f7;
     float: left;
-    border-radius: 10px 10px 10px 0
-}
-
-.chatapp_body .chat-history .message_data li.left .message:after {
-    bottom: 0;
-    left: -10px;
-    border-right-color: #3C89DA;
-    border-bottom-color: #3C89DA
+    bottom: -15px;
+    border-radius: 10px 10px 10px 10px;
+    left: -30px;
 }
 
 .chatapp_body .chat-history .message_data li.right .user_pix {

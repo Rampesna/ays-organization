@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "watch": "nodemon --exec electron .",
     "build": "electron-build"
   },
   "repository": {
@@ -22,12 +23,18 @@
     "custom-electron-titlebar": "^3.2.6",
     "electron": "^11.2.2",
     "electron-toaster": "^2.0.4",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
     "jquery": "^3.5.1",
     "jwt-decode": "^3.1.2",
-    "keytar": "^7.3.0"
+    "keytar": "^7.3.0",
+    "mysql": "^2.18.1",
+    "socket.io": "^3.1.1"
   },
   "devDependencies": {
     "electron-builder": "^22.9.1",
-    "electron-reloader": "^1.2.0"
+    "electron-reloader": "^1.2.0",
+    "nodemon": "^2.0.7",
+    "uuid": "^8.3.2"
   }
 }
