@@ -16,7 +16,7 @@ function authControl() {
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
-                preload: path.join(__dirname, 'preload.js')
+                preload: path.join(__dirname, 'loader.js')
             }
         });
 
@@ -36,7 +36,7 @@ function authControl() {
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
-                preload: path.join(__dirname, 'preload.js')
+                preload: path.join(__dirname, 'loader.js')
             }
         });
 

@@ -56,10 +56,17 @@
                     </div>
                     <br>
                     <div class="form-group clearfix">
-                        <label class="fancy-checkbox element-left">
-                            <input type="checkbox">
-                            <span>Beni Hatırla</span>
+                        <label class="fancy-radio custom-color-green">
+                            <input name="model" value="Employee" type="radio" required>
+                            <span><i></i>Personel</span>
                         </label>
+                        <label class="fancy-radio custom-color-green">
+                            <input name="model" value="User" type="radio">
+                            <span><i></i>Yönetici</span>
+                        </label>
+                        <br>
+                        <small class="text-danger mt-1 text-center" id="model_error">*Hesap Türünüzü Seçin</small>
+                        <small class="text-danger mt-1 text-center" id="general_error"></small>
                     </div>
                     <button type="button" id="sign_in" class="btn btn-primary btn-block">Giriş Yap</button>
                 </div>
@@ -77,13 +84,19 @@
 <script src="assets/vendor/toastr/toastr.js"></script>
 
 <script>
+    const { ipcRenderer } = require('electron');
+    var generalErrorSelector = $("#general_error");
+
     $("#email_error").hide();
     $("#password_error").hide();
+    $("#model_error").hide();
+    generalErrorSelector.hide();
     $("#loginForm").hide();
 
     $("#sign_in").on('click', function () {
         var email = $("#email").val();
         var password = $("#password").val();
+        var model = $("input[type='radio']:checked").val();
 
         if (email == null || email === '') {
             $("#email_error").fadeIn(250);
@@ -93,15 +106,30 @@
                 $("#password_error").fadeIn(250);
             } else {
                 $("#password_error").fadeOut(250);
+                if (model == null) {
+                    $("#model_error").fadeIn(250);
+                } else {
+                    $("#model_error").fadeOut(250);
+                    generalErrorSelector.fadeOut(250);
 
-                const { ipcRenderer } = require('electron');
-
-                ipcRenderer.send('login', {
-                    email: email,
-                    password: password
-                });
+                    ipcRenderer.send('login', {
+                        email: email,
+                        password: password,
+                        model: model
+                    });
+                }
             }
         }
+    });
+
+    ipcRenderer.on('userNotFound', (err, data) => {
+        generalErrorSelector.html('Böyle Bir Kullanıcı Bulunamadı!');
+        generalErrorSelector.fadeIn(250);
+    });
+
+    ipcRenderer.on('failedLogin', (err, data) => {
+        generalErrorSelector.html('E-posta Adresi ve Şifre Uyuşmuyor');
+        generalErrorSelector.fadeIn(250);
     });
 
     $(document).ready(function () {

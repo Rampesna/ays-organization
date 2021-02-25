@@ -75,6 +75,7 @@
         }
 
     </style>
+
 </head>
 
 <body class="theme-blush font-montserrat">
@@ -95,19 +96,20 @@
                 </div>
                 <div class="dropdown">
                     <span>Hoşgeldiniz,</span>
-                    <a class="user-name"><strong>Talha Can</strong></a>
+                    <a id="authUserSidebarNameSelector" href="#" class="dropdown-toggle user-name" data-toggle="dropdown"></a>
+                    <ul class="dropdown-menu dropdown-menu-right account vivify flipInY">
+                        <li>
+                            <a href="#" id="logoutButton">
+                                <i class="icon-power"></i>Çıkış Yap
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+            <input type="hidden" id="selected_group_id">
             <nav id="left-sidebar-nav" class="sidebar-nav">
-                <ul id="main-menu" class="metismenu">
+                <ul id="groupsSelector" class="metismenu">
                     <li class="header">Sohbet Kanalları</li>
-                    <li class=""><a href="#" data-id="1" class="groupChatTitle" style="font-size:13px; margin-left: 15px"><span>#Genel</span></a></li>
-                    <li class=""><a href="#" data-id="2" class="groupChatTitle" style="font-size:13px; margin-left: 15px"><span>#I-Uyum</span></a></li>
-                    <li class=""><a href="#" data-id="3" class="groupChatTitle" style="font-size:13px; margin-left: 15px"><span>#e-Fatura e-Arşiv</span></a></li>
-                    <li class="header" style="margin-bottom: 20px">Direkt Mesaj</li>
-                    <li class=""><a href="#" data-id="1" class="singleChatTitle" style="font-size:13px; margin-left: 5px; margin-top: -15px"><i class="fa fa-circle text-success"></i><span>Enes Karakuş</span></a></li>
-                    <li class=""><a href="#" data-id="2" class="singleChatTitle" style="font-size:13px; margin-left: 5px; margin-top: -15px"><i class="fa fa-circle-o text-warning"></i><span>Furkan Haskoloğlu</span></a></li>
-                    <li class=""><a href="#" data-id="3" class="singleChatTitle" style="font-size:13px; margin-left: 5px; margin-top: -15px"><i class="fa fa-circle text-danger"></i><span>Uğur Gök</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -130,86 +132,15 @@
     </div>
 </div>
 
-
-<script>window.$ = window.jQuery = require('jquery');</script>
-<!--<script>window.$ = window.jQuery = require('./jquery-3.0.0.min.js');</script>-->
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
 
 <script src="assets/bundles/libscripts.bundle.js"></script>
 <script src="assets/bundles/vendorscripts.bundle.js"></script>
 <script src="assets/bundles/mainscripts.bundle.js"></script>
-
 <script src="node_modules/socket.io/client-dist/socket.io.js"></script>
-
-<script>
-    var socket = io('http://localhost:3800');
-    socket.on('connect', function(){});
-    socket.on('event', function(data){});
-    socket.on('disconnect', function(){});
-
-    var chatHistorySelector = $('#chatHistory');
-
-    socket.on('re-send-message', (message) => {
-        var date = new Date()
-        var time = date.getHours() + ":" + date.getMinutes()
-        messagesSelector.append('' +
-            '<li class="left clearfix">' +
-            '    <img class="user_pix" src="assets/images/avatar.jpg" alt="avatar">' +
-            '        <div class="message">' +
-            '               <span>' + message + '</span>' +
-            '           </div>' +
-            '           <span class="data_time">' + time + '</span>' +
-            '   </li>' +
-            '')
-        chatHistorySelector.scrollTop(chatHistorySelector[0].scrollHeight);
-    })
-
-    $('.groupChatTitle').click(function () {
-        $("#chatBody").show();
-    })
-
-    var messagesSelector = $("#messages");
-
-    $("#message").keydown(function (event) {
-        if (event.keyCode === 13) {
-            socket.emit('send-message', $(this).val())
-        }
-    }).keyup( function (event) {
-        if (event.keyCode === 13) {
-            $(this).val(null)
-        }
-    });
-
-</script>
-
-<script>
-    var mysql      = require('mysql');
-    var connection = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : '',
-        database : 'realtime'
-    });
-
-    connection.connect();
-
-    connection.query("SELECT * from messages where deleted_at is null", function (error, messages, fields) {
-        if (error) throw error;
-        $.each(messages, function (message) {
-            var date = new Date(messages[message].created_at);
-            messagesSelector.append('' +
-                '<li class="left clearfix">' +
-                '    <img class="user_pix" src="assets/images/avatar.jpg" alt="avatar">' +
-                '        <div class="message">' +
-                '               <span>' + messages[message].message + '</span>' +
-                '           </div>' +
-                '           <span class="data_time">' + date.getHours() + ':' + date.getMinutes() + '</span>' +
-                '   </li>' +
-                '')
-        });
-    });
-
-    connection.end();
-</script>
+<script src="services/socketio.js"></script>
 
 </body>
 </html>
