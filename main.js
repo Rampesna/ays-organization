@@ -66,7 +66,7 @@ app.on('ready', () => {
     } else {
         applicationWindow = new BrowserWindow({
             width: 1800,
-            height: 900,
+            height: 650,
             titleBarStyle: "hidden",
             frame: false,
             webPreferences: {
@@ -75,6 +75,9 @@ app.on('ready', () => {
                 preload: path.join(__dirname, 'preload.js')
             }
         });
+
+        applicationWindow.setPosition(applicationWindow.getPosition()[0], 10)
+        applicationWindow.toggleDevTools()
 
         applicationWindow.loadURL(
             url.format({
@@ -101,7 +104,7 @@ app.on('ready', () => {
 
                 applicationWindow = new BrowserWindow({
                     width: 1800,
-                    height: 900,
+                    height: 650,
                     titleBarStyle: "hidden",
                     frame: false,
                     webPreferences: {
@@ -110,6 +113,9 @@ app.on('ready', () => {
                         preload: path.join(__dirname, 'preload.js')
                     }
                 });
+
+                applicationWindow.setPosition(applicationWindow.getPosition()[0], 10)
+                applicationWindow.toggleDevTools()
 
                 applicationWindow.loadURL(
                     url.format({

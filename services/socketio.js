@@ -9,13 +9,21 @@ var logoutButton = $('#logoutButton')
 var groupsSelector = $('#groupsSelector')
 var selectedGroupIdSelector = $("#selected_group_id");
 var messagesSelector = $("#messages");
+var groupsTitleSelector = $("#groupsTitle");
+var createGroupIconSelector = $("#createGroupIcon");
+var CreateGroupModalSelector = $("#CreateGroupModal");
+var createGroupFormSelector = $("#createGroupForm");
+var createGroupButtonSelector = $("#createGroupButton");
+var newGroupNameSelector = $("#newGroupName");
 
 $.getJSON('env.json', (env) => {
     auth = env.auth
 })
 
 var socket = io('http://192.168.2.31:3800')
-socket.on('connect', function () {})
+socket.on('connect', function (data) {
+    console.log('connected')
+})
 socket.on('event', function (data) {})
 socket.on('disconnect', function () {})
 
@@ -32,6 +40,16 @@ socket.on('re-send-message', function (data) {
     chatHistorySelector.scrollTop(chatHistorySelector[0].scrollHeight);
 })
 
+socket.on('re-create-group', function (group) {
+    groupsSelector.append('' +
+        '<li class="">' +
+        '    <a href="#" data-id="' + group.id + '" class="groupChatTitle" style="font-size:13px; margin-left: 15px">' +
+        '        <span>#' + group.name + '</span>' +
+        '    </a>' +
+        '</li>' +
+        '');
+})
+
 $(document).delegate('.groupChatTitle', 'click', function (element) {
     var group_id = $(this).data('id')
     if (selectedGroupIdSelector.val() != $(this).data('id')) {
@@ -44,6 +62,7 @@ $(document).delegate('.groupChatTitle', 'click', function (element) {
             user: auth.user,
             group_id: group_id
         })
+
 
         axios.get('http://192.168.2.31:8000/api/v1/group/messages', {
             params: {
@@ -63,6 +82,7 @@ $(document).delegate('.groupChatTitle', 'click', function (element) {
                         '</li>' +
                         '');
                 });
+                chatHistorySelector.scrollTop(chatHistorySelector[0].scrollHeight);
             }
         }, (error) => {
             console.log(error);
@@ -92,6 +112,24 @@ $("#message").keydown(function (event) {
 logoutButton.click(function () {
     ipcRenderer.send('logout', {});
 });
+
+groupsTitleSelector.on('mouseover', function () {
+    createGroupIconSelector.show()
+})
+
+groupsTitleSelector.on('mouseout', function () {
+    createGroupIconSelector.hide()
+})
+
+createGroupIconSelector.on('click', function () {
+    CreateGroupModalSelector.modal('show')
+})
+
+createGroupButtonSelector.on('click', function () {
+    socket.emit('create-group', newGroupNameSelector.val())
+    createGroupFormSelector.trigger('reset')
+    CreateGroupModalSelector.modal('hide')
+})
 
 $(document).ready(function () {
     authUserSidebarNameSelector.html('<strong>' + auth.user.name + '</strong>');
