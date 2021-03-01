@@ -14,12 +14,12 @@ const {
 } = electron;
 
 const mainMenuTemplate = [
-    {
-        label: 'Geliştirici Penceresi',
-        click(item, focusedWindow) {
-            focusedWindow.toggleDevTools();
-        }
-    }
+    // {
+    //     label: 'Geliştirici Penceresi',
+    //     click(item, focusedWindow) {
+    //         focusedWindow.toggleDevTools();
+    //     }
+    // }
 ];
 
 let applicationWindow
@@ -52,7 +52,8 @@ app.on('ready', () => {
             resizable: false,
             webPreferences: {
                 nodeIntegration: true,
-                enableRemoteModule: true
+                enableRemoteModule: true,
+                preload: path.join(__dirname, 'preload.js')
             }
         });
 
@@ -77,7 +78,7 @@ app.on('ready', () => {
         });
 
         applicationWindow.setPosition(applicationWindow.getPosition()[0], 10)
-        applicationWindow.toggleDevTools()
+
 
         applicationWindow.loadURL(
             url.format({
@@ -115,7 +116,7 @@ app.on('ready', () => {
                 });
 
                 applicationWindow.setPosition(applicationWindow.getPosition()[0], 10)
-                applicationWindow.toggleDevTools()
+
 
                 applicationWindow.loadURL(
                     url.format({
@@ -144,7 +145,8 @@ app.on('ready', () => {
             resizable: false,
             webPreferences: {
                 nodeIntegration: true,
-                enableRemoteModule: true
+                enableRemoteModule: true,
+                preload: path.join(__dirname, 'preload.js')
             }
         });
 

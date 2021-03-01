@@ -24,8 +24,10 @@ var socket = io('http://192.168.2.31:3800')
 socket.on('connect', function (data) {
     console.log('connected')
 })
-socket.on('event', function (data) {})
-socket.on('disconnect', function () {})
+socket.on('event', function (data) {
+})
+socket.on('disconnect', function () {
+})
 
 socket.on('re-send-message', function (data) {
     messagesSelector.append('' +
@@ -114,7 +116,9 @@ logoutButton.click(function () {
 });
 
 groupsTitleSelector.on('mouseover', function () {
-    createGroupIconSelector.show()
+    if (auth.user.model === "User") {
+        createGroupIconSelector.show()
+    }
 })
 
 groupsTitleSelector.on('mouseout', function () {
